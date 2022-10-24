@@ -29,7 +29,6 @@ from .logger import init_logger
 def initialize_easynlp(extra_args_provider=None,
                        args_defaults={},
                        ignore_unknown_args=False):
-
     # Support both CPU and GPU train/eval/predict
     set_global_variables(extra_args_provider=extra_args_provider,
                          args_defaults=args_defaults,
@@ -43,7 +42,7 @@ def initialize_easynlp(extra_args_provider=None,
         print('> setting random seeds to {} ...'.format(args.random_seed))
     _set_random_seed(args.random_seed)
 
-    #this env is for predictor
+    # this env is for predictor
     os.environ['TF_FAILOVER_RESTORE_WORKS_DIR'] = args.restore_works_dir
     os.environ['EASYNLP_MODELZOO_BASE_DIR'] = args.modelzoo_base_dir
     os.environ['EASYNLP_IS_MASTER'] = str(args.is_master_node)
@@ -64,14 +63,13 @@ def initialize_easynlp(extra_args_provider=None,
 
     args.data_threads = max(args.data_threads, 5)
     # Compile dependencies.
-    #_compile_dependencies()
+    # _compile_dependencies()
 
     # No continuation function
     return args
 
 
 def _compile_dependencies():
-
     args = get_args()
 
     # Always build on rank zero first.
@@ -125,7 +123,7 @@ def _initialize_distributed():
             device = args.rank % device_count
             if args.local_rank is not None:
                 assert args.local_rank == device, \
-                    'expected local-rank to be the same as rank % device-count.'
+                    f'expected local-rank = {args.local_rank} to be the same as rank % device-count = {device}.device_count={device_count}, args.rank={args.rank}, args.local_rank={args.local_rank}'
             else:
                 args.local_rank = device
             torch.cuda.set_device(device)

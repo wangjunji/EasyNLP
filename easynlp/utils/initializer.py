@@ -16,6 +16,7 @@
 import os
 import random
 import time
+import datetime
 
 import numpy as np
 import torch
@@ -135,7 +136,8 @@ def _initialize_distributed():
         torch.distributed.init_process_group(backend=args.distributed_backend,
                                              world_size=args.world_size,
                                              rank=args.rank,
-                                             init_method=init_method)
+                                             init_method=init_method,
+                                             timeout=datetime.timedelta(seconds=7200))
 
         torch.distributed.barrier()
         print('Init dist done. World size: {}, rank {}, l_rank {}'.format(

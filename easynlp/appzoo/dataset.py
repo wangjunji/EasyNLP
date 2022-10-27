@@ -112,7 +112,7 @@ class BaseDataset(Dataset):
                                              slice_id=slice_id,
                                              slice_count=slice_count,
                                              capacity=reader_buffer_size,
-                                             num_threads=0)
+                                             num_threads=1)
         self.table_row_count = self.table_reader.get_row_count()
         self.start_position = self.table_row_count * slice_id
         self.end_pos = self.table_reader.end_pos        
@@ -171,7 +171,7 @@ class BaseDataset(Dataset):
                 print("table_path:%s" % table_path)
 
                 import common_io
-                self.table_reader = common_io.table.TableReader(table_path, num_threads=1, capacity=1024)
+                self.table_reader = common_io.table.TableReader(table_path, num_threads=1, capacity=256)
 
             try:
                 row = self.table_reader.read(num_records=1, allow_smaller_final_batch=True)

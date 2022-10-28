@@ -112,7 +112,7 @@ class BaseDataset(Dataset):
                                              slice_id=slice_id,
                                              slice_count=slice_count,
                                              capacity=reader_buffer_size,
-                                             num_threads=1)
+                                             num_threads=0)
         self.table_row_count = self.table_reader.get_row_count()
         self.start_position = self.table_row_count * slice_id
         self.end_pos = self.table_reader.end_pos        

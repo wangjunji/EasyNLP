@@ -40,7 +40,7 @@ class BaseDataset(Dataset):
                  data_file: str,
                  skip_first_line=False,
                  selected_columns="",
-                 reader_buffer_size=256,
+                 reader_buffer_size=64,
                  input_schema=None,
                  is_training=True,
                  output_format="line",
@@ -171,7 +171,7 @@ class BaseDataset(Dataset):
                 print("table_path:%s" % table_path)
 
                 import common_io
-                self.table_reader = common_io.table.TableReader(table_path, num_threads=1, capacity=256)
+                self.table_reader = common_io.table.TableReader(table_path, num_threads=0, capacity=64)
 
             try:
                 row = self.table_reader.read(num_records=1, allow_smaller_final_batch=True)

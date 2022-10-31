@@ -171,7 +171,7 @@ class BaseDataset(Dataset):
                 print("table_path:%s" % table_path)
 
                 import common_io
-                self.table_reader = common_io.table.TableReader(table_path, num_threads=0, capacity=64)
+                self.table_reader = common_io.table.TableReader(table_path, num_threads=1, capacity=64)
 
             try:
                 row = self.table_reader.read(num_records=1, allow_smaller_final_batch=True)
